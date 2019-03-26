@@ -1,5 +1,6 @@
 package com.viewa.webservice.web.domain.posts;
 
+import com.viewa.webservice.dto.posts.PostsSaveRequestDto;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +38,7 @@ public class PostsRepositoryTest {
                         .content("test content")
                         .author("icewkd@gmail.com")
                         .build());
+
         // when
         List<Posts> postsList = postsRepository.findAll();
 
