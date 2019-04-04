@@ -1,11 +1,14 @@
 package com.viewa.webservice.service;
 
+import com.viewa.webservice.dto.posts.PostsMainResponseDto;
 import com.viewa.webservice.dto.posts.PostsSaveRequestDto;
 import com.viewa.webservice.web.domain.posts.PostsRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @Service
@@ -17,5 +20,12 @@ public class PostsService {
         return postsRepository.save(dto.toEntity()).getId();    // 굳이 dto를 controller가 아닌 service에서 불러서 쓰는 이유는, 역할분담을 위해서.
         // 비지니스 로직 & 트랜잭션 관리는 모두 Service에서 관리
         // View 와 연동되는 부분은 Controller에서 담당
+    }
+
+    @Transactional
+    public List<PostsMainResponseDto> findAllDesc(){
+        return postsRepository.findAllDesc()
+                .map(PostsMainResponseDto::new)
+                .collect(Collectors.toList());
     }
 }
