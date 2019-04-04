@@ -8,11 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.hamcrest.CoreMatchers.is;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -43,10 +45,30 @@ public class PostsRepositoryTest {
         List<Posts> postsList = postsRepository.findAll();
 
         //then
-        Posts posts = postsList.get(0);
+        Posts posts = postsList.get(2);
         assertThat(posts.getTitle(), is("test title"));
         assertThat(posts.getContent(), is("test content"));
     }
+
+    @Test
+    public void BaseTimeEntity_등록(){
+        //given
+        LocalDateTime now = LocalDateTime.now();
+        postsRepository.save(Posts.builder()
+                .title("테스트 게시글")
+                .content("test content")
+                .author("icewkd@gmail.com")
+                .build());
+        // when
+        List<Posts> postsList = postsRepository.findAll();
+
+        // then
+        Posts posts = postsList.get(2);
+        assertTrue(posts.getCreatedDate().isAfter(now));
+        assertTrue(posts.getModifiedDate().isAfter(now));
+
+    }
+
 }
 
 
