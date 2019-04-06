@@ -14,6 +14,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -44,7 +45,7 @@ public class PostsRepositoryTest {
         List<Posts> postsList = postsRepository.findAll();
 
         //then
-        Posts posts = postsList.get(0);
+        Posts posts = postsList.get(2);
         assertThat(posts.getTitle(), is("test title"));
         assertThat(posts.getContent(), is("test content"));
     }
@@ -55,6 +56,7 @@ public class PostsRepositoryTest {
         LocalDateTime now = LocalDateTime.now();
         postsRepository.save(Posts.builder()
                 .title("테스트 게시글")
+<<<<<<< HEAD
                 .content("테스트 본문")
                 .author("icewkd@gmail.com")
                 .build());
@@ -66,6 +68,21 @@ public class PostsRepositoryTest {
         assertTrue(posts.getCreatedDate().isAfter(now));
         assertTrue(posts.getModifiedDate().isAfter(now));
     }
+=======
+                .content("test content")
+                .author("icewkd@gmail.com")
+                .build());
+        // when
+        List<Posts> postsList = postsRepository.findAll();
+
+        // then
+        Posts posts = postsList.get(2);
+        assertTrue(posts.getCreatedDate().isAfter(now));
+        assertTrue(posts.getModifiedDate().isAfter(now));
+
+    }
+
+>>>>>>> 8918b5a6989f8e52da097d1d7f8ae65421a4bf9f
 }
 
 
